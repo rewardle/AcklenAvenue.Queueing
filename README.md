@@ -2,9 +2,13 @@
 
 ## Installation:
 
-`install-package AcklenAvenue.Queueing`
+```
+install-package AcklenAvenue.Queueing
+```
 and/or
-`install-package AcklenAvenue.Queueing.LocalFile`
+```
+install-package AcklenAvenue.Queueing.LocalFile
+```
 
 ## Local File Queue Example Usage:
 
