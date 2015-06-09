@@ -49,7 +49,7 @@
   <ItemGroup>
     <Compile Include="AWSSqsReceiver.cs" />
     <Compile Include="AWSSqsSender.cs" />
-    <Compile Include="MessageReceived.cs" />
+    <Compile Include="SQSMessageReceived.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueueCreator.cs" />
     <Compile Include="SendResponse.cs" />

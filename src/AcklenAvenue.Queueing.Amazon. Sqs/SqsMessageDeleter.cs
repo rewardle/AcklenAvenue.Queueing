@@ -1,4 +1,6 @@
-﻿using Amazon.SQS;
+﻿using System;
+
+using Amazon.SQS;
 using Amazon.SQS.Model;
 
 namespace AcklenAvenue.Queueing.Amazon.Sqs
@@ -24,11 +26,15 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs
         public async void Delete(IMessageReceived<TMessage> messageReceived)
         {
             var amazonSqsConfig = new AmazonSQSConfig { ServiceURL = ServiceUrl };
-
+            var msg = messageReceived as SqsMessageReceived<TMessage>;
+            if (msg == null)
+            {
+                throw new Exception(string.Format("The message you send is not form AWS SQS"));
+            }
             using (var sqsClient = new AmazonSQSClient(AwsAccessKeyId, AwsSecretAccessKey, amazonSqsConfig))
             {
-                DeleteMessageResponse delete = await 
-                    sqsClient.DeleteMessageAsync(new DeleteMessageRequest(QueueUrl, messageReceived.ReceiptHandle));
+                DeleteMessageResponse delete =
+                    await sqsClient.DeleteMessageAsync(new DeleteMessageRequest(QueueUrl, msg.ReceiptHandle));
                 long d = delete.ContentLength;
             }
         }

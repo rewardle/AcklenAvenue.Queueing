@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-using Amazon.SQS;
+﻿using Amazon.SQS;
 using Amazon.SQS.Model;
 
 using Newtonsoft.Json;
@@ -28,7 +26,7 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs
 
         public int Delay { get; set; }
 
-        public async Task<ISendResponse> SendMessage(TMessage message)
+        public ISendResponse Send(TMessage message)
         {
             var amazonSqsConfig = new AmazonSQSConfig { ServiceURL = ServiceUrl };
 
@@ -45,7 +43,7 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs
 
                 sendMessageRequest.MessageAttributes.Add("Type", messageAttributeValue);
 
-                SendMessageResponse response = await sqsClient.SendMessageAsync(sendMessageRequest);
+                SendMessageResponse response = sqsClient.SendMessage(sendMessageRequest);
 
                 return new SendResponse(response.MessageId);
             }

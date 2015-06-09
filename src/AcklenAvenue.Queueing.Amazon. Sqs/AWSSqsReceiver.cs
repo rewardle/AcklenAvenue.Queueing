@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 
 using Amazon.SQS;
 using Amazon.SQS.Model;
@@ -35,7 +34,7 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs
 
         public int VisibilityTimeOut { get; set; }
 
-        public async Task<IEnumerable<IMessageReceived<TMessage>>> ReceiveMessage()
+        public IEnumerable<IMessageReceived<TMessage>> Receive()
         {
             var amazonSqsConfig = new AmazonSQSConfig { ServiceURL = ServiceUrl };
 
@@ -50,9 +49,9 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs
                                                 };
                 receiveMessageRequest.MessageAttributeNames.Add("All");
 
-                ReceiveMessageResponse response = await sqsClient.ReceiveMessageAsync(receiveMessageRequest);
+                ReceiveMessageResponse response = sqsClient.ReceiveMessage(receiveMessageRequest);
 
-                var messages = new List<MessageReceived<TMessage>>();
+                var messages = new List<SqsMessageReceived<TMessage>>();
                 foreach (Message message in response.Messages)
                 {
                     string stringType = message.MessageAttributes["Type"].StringValue;
@@ -64,7 +63,7 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs
                     Type type = selectMany.FirstOrDefault(x => x.FullName.EndsWith(stringType));
 
                     object deserializeObject = JsonConvert.DeserializeObject(message.Body, type);
-                    var messageReceived = new MessageReceived<TMessage>
+                    var messageReceived = new SqsMessageReceived<TMessage>
                                               {
                                                   ReceiptHandle = message.ReceiptHandle,
                                                   Message = (TMessage)deserializeObject

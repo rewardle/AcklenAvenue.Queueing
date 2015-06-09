@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileMessageRecived.cs" />
+    <Compile Include="FileSendReponse.cs" />
     <Compile Include="LocalFileBasedQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
