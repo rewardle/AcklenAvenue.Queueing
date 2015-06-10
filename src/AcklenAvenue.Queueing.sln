@@ -5,7 +5,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcklenAvenue.Queueing", "Ac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcklenAvenue.Queueing.LocalFile", "AcklenAvenue.Queueing.LocalFile\AcklenAvenue.Queueing.LocalFile.csproj", "{A6FE2FF7-30B7-4B5A-8A38-9D61A4F30301}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcklenAvenue.Queueing.Amazon. Sqs", "AcklenAvenue.Queueing.Amazon. Sqs\AcklenAvenue.Queueing.Amazon. Sqs.csproj", "{40BB0C79-B896-40AE-AE89-2B7BB424E751}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcklenAvenue.Queueing.Amazon.Sqs", "AcklenAvenue.Queueing.Amazon.Sqs\AcklenAvenue.Queueing.Amazon.Sqs.csproj", "{40BB0C79-B896-40AE-AE89-2B7BB424E751}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

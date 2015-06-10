@@ -51,7 +51,7 @@
   <ItemGroup>
     <ProjectReference Include="..\AcklenAvenue.Queueing\AcklenAvenue.Queueing.csproj">
       <Project>{E9575764-F36B-4FEE-B99D-BAE0B1C6D89D}</Project>
-      <Name>AcklenAvenue.Queuing</Name>
+      <Name>AcklenAvenue.Queueing</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
