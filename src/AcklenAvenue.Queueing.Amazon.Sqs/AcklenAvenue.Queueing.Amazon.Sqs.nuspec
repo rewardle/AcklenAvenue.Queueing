@@ -14,7 +14,8 @@
     <copyright>Copyright Acklen Avenue, 2012-2015</copyright>        
     <dependencies>
       <dependency id="Newtonsoft.Json" version="6.0.8"/>
-      <dependency id="AcklenAvenue.Queueing" version="6.0.8"/>
+      <dependency id="AcklenAvenue.Queueing"/>
+      <dependency id="AWSSDK" version="2.3.41.0"/>
     </dependencies>
   </metadata>
 </package>
