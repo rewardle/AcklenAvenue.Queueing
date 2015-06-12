@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("AcklenAvenue.Queueing.Amazon. Sqs")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("AcklenAvenue.Queueing.Amazon.Sqs")]
+[assembly: AssemblyDescription("Queue implementation for Amazon SQS.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("AcklenAvenue.Queueing.Amazon. Sqs")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
+[assembly: AssemblyProduct("AcklenAvenue.Queueing.Amazon.Sqs")]
+[assembly: AssemblyCopyright("Copyright © Acklen Avenue 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
