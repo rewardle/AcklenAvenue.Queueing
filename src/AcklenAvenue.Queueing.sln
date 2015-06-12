@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcklenAvenue.Queueing", "AcklenAvenue.Queueing\AcklenAvenue.Queueing.csproj", "{E9575764-F36B-4FEE-B99D-BAE0B1C6D89D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcklenAvenue.Queueing.LocalFile", "AcklenAvenue.Queueing.LocalFile\AcklenAvenue.Queueing.LocalFile.csproj", "{A6FE2FF7-30B7-4B5A-8A38-9D61A4F30301}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcklenAvenue.Queueing.Amazon.Sqs", "AcklenAvenue.Queueing.Amazon.Sqs\AcklenAvenue.Queueing.Amazon.Sqs.csproj", "{40BB0C79-B896-40AE-AE89-2B7BB424E751}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +21,10 @@ Global
 		{A6FE2FF7-30B7-4B5A-8A38-9D61A4F30301}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6FE2FF7-30B7-4B5A-8A38-9D61A4F30301}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6FE2FF7-30B7-4B5A-8A38-9D61A4F30301}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40BB0C79-B896-40AE-AE89-2B7BB424E751}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40BB0C79-B896-40AE-AE89-2B7BB424E751}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40BB0C79-B896-40AE-AE89-2B7BB424E751}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40BB0C79-B896-40AE-AE89-2B7BB424E751}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

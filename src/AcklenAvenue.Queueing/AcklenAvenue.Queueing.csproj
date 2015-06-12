@@ -39,8 +39,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IMessageDeleter.cs" />
+    <Compile Include="IMessageReceived.cs" />
+    <Compile Include="IMessageReceiver.cs" />
+    <Compile Include="IMessageSender.cs" />
+    <Compile Include="IQueueCreator.cs" />
     <Compile Include="IQueuePuller.cs" />
     <Compile Include="IQueuePusher.cs" />
+    <Compile Include="ISendResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -43,13 +43,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileMessageRecived.cs" />
+    <Compile Include="FileSendReponse.cs" />
     <Compile Include="LocalFileBasedQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AcklenAvenue.Queueing\AcklenAvenue.Queueing.csproj">
       <Project>{E9575764-F36B-4FEE-B99D-BAE0B1C6D89D}</Project>
-      <Name>AcklenAvenue.Queuing</Name>
+      <Name>AcklenAvenue.Queueing</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
