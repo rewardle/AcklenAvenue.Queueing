@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcklenAvenue.Queueing.Local
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcklenAvenue.Queueing.Amazon.Sqs", "AcklenAvenue.Queueing.Amazon.Sqs\AcklenAvenue.Queueing.Amazon.Sqs.csproj", "{40BB0C79-B896-40AE-AE89-2B7BB424E751}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcklenAvenue.Queueing.Amazon.Sqs.IntegrationSpecs", "AcklenAvenue.Queueing.Amazon.Sqs.IntegrationSpecs\AcklenAvenue.Queueing.Amazon.Sqs.IntegrationSpecs.csproj", "{581F471F-B8D0-41CF-9EF0-6CE96D9252DD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{40BB0C79-B896-40AE-AE89-2B7BB424E751}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40BB0C79-B896-40AE-AE89-2B7BB424E751}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40BB0C79-B896-40AE-AE89-2B7BB424E751}.Release|Any CPU.Build.0 = Release|Any CPU
+		{581F471F-B8D0-41CF-9EF0-6CE96D9252DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{581F471F-B8D0-41CF-9EF0-6CE96D9252DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{581F471F-B8D0-41CF-9EF0-6CE96D9252DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{581F471F-B8D0-41CF-9EF0-6CE96D9252DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

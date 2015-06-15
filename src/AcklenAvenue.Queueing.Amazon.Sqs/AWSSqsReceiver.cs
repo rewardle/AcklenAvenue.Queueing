@@ -49,7 +49,7 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs
                                                 };
                 receiveMessageRequest.MessageAttributeNames.Add("All");
 
-                ReceiveMessageResponse response = sqsClient.ReceiveMessage(receiveMessageRequest);
+                ReceiveMessageResponse response = sqsClient.ReceiveMessageAsync(receiveMessageRequest).Result;
 
                 var messages = new List<SqsMessageReceived<TMessage>>();
                 foreach (Message message in response.Messages)
