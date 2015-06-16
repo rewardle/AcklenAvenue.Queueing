@@ -1,8 +1,6 @@
 ﻿using Machine.Specifications;
 
-using AWS = Amazon;
-
-namespace AcklenAvenue.Queueing.Amazon.Sqs.IntegrationSpecs
+namespace AcklenAvenue.Queueing.Amazon.Sqs.Specs.Integration
 {
     public class when_sending_a_message_from_sns
     {

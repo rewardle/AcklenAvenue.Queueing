@@ -1,4 +1,4 @@
-﻿namespace AcklenAvenue.Queueing.Amazon.Sqs.IntegrationSpecs
+﻿namespace AcklenAvenue.Queueing.Amazon.Sqs.Specs.Integration
 {
     public class FakeMessage
     {

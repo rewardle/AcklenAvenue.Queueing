@@ -1,6 +1,6 @@
 ﻿using Machine.Specifications;
 
-namespace AcklenAvenue.Queueing.Amazon.Sqs.IntegrationSpecs
+namespace AcklenAvenue.Queueing.Amazon.Sqs.Specs.Integration
 {
     public class when_subcribing_a_queue_to_a_topic
     {

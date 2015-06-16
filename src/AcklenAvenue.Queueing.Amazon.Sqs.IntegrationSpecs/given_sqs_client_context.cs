@@ -3,7 +3,7 @@ using Amazon.SQS.Model;
 
 using Machine.Specifications;
 
-namespace AcklenAvenue.Queueing.Amazon.Sqs.IntegrationSpecs
+namespace AcklenAvenue.Queueing.Amazon.Sqs.Specs.Integration
 {
     public class given_sqs_client_context
     {

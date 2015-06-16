@@ -3,7 +3,7 @@ using System.Linq;
 
 using Machine.Specifications;
 
-namespace AcklenAvenue.Queueing.Amazon.Sqs.IntegrationSpecs
+namespace AcklenAvenue.Queueing.Amazon.Sqs.Specs.Integration
 {
     public class when_reading_queue : given_sqs_client_context
     {

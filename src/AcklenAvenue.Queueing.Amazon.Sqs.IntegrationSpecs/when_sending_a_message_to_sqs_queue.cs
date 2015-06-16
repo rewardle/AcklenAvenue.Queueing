@@ -1,12 +1,10 @@
-﻿using System.Threading.Tasks;
-
-using Amazon.SQS.Model;
+﻿using Amazon.SQS.Model;
 
 using Machine.Specifications;
 
 using Newtonsoft.Json;
 
-namespace AcklenAvenue.Queueing.Amazon.Sqs.IntegrationSpecs
+namespace AcklenAvenue.Queueing.Amazon.Sqs.Specs.Integration
 {
     public class when_sending_a_message_to_sqs_queue : given_sqs_client_context
     {

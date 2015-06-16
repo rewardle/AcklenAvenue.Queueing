@@ -7,8 +7,8 @@
     <ProjectGuid>{581F471F-B8D0-41CF-9EF0-6CE96D9252DD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AcklenAvenue.Queueing.Amazon.Sqs.IntegrationSpecs</RootNamespace>
-    <AssemblyName>AcklenAvenue.Queueing.Amazon.Sqs.IntegrationSpecs</AssemblyName>
+    <RootNamespace>AcklenAvenue.Queueing.Amazon.Sqs.Specs.Integration</RootNamespace>
+    <AssemblyName>AcklenAvenue.Queueing.Amazon.Sqs.Specs.Integration</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
