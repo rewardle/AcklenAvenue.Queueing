@@ -7,6 +7,8 @@
             Message = message;
         }
 
+        public string Id { get; set; }
+
         public T Message { get; set; }
     }
 }
