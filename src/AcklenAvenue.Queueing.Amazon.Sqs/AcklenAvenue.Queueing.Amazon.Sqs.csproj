@@ -47,13 +47,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AWSSqsReceiver.cs" />
+    <Compile Include="AWSSnsSender.cs" />
+    <Compile Include="AWSSnsSubcriber.cs" />
+    <Compile Include="AWSSqsReceiverBase.cs" />
+    <Compile Include="NormalAWSSqsReceiver.cs" />
     <Compile Include="AWSSqsSender.cs" />
+    <Compile Include="IQueueSubcriber.cs" />
+    <Compile Include="ISubscribeReponseMessage.cs" />
+    <Compile Include="SnsMessageSqsReceiver.cs" />
     <Compile Include="SQSMessageReceived.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueueCreator.cs" />
     <Compile Include="SendResponse.cs" />
     <Compile Include="SqsMessageDeleter.cs" />
+    <Compile Include="SubcriptionMessage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

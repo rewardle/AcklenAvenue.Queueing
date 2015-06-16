@@ -22,7 +22,7 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs.IntegrationSpecs
                 _fakeMessage = new FakeMessage { Greet = "hi" };
                 _response = sender.Send(_fakeMessage);
 
-                _messageReceiver = new AWSSqsReceiver<FakeMessage>(
+                _messageReceiver = new NormalAWSSqsReceiver<FakeMessage>(
                     acces, scrt, ServiceUrl, CreateQueueResponse.QueueUrl);
             };
 

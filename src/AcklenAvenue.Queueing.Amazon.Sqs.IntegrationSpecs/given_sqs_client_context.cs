@@ -25,8 +25,8 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs.IntegrationSpecs
 
         Establish context = () =>
             {
-                acces = "AKIAICDZWES32E4QZQNA";
-                scrt = "UrEIS7fz0qb1MqJnei0mHOTfHjiwU0XRg7rhX8S+";
+                acces = "acces";
+                scrt = "key+";
                 ServiceUrl = "http://sqs.us-west-2.amazonaws.com";
                 Queuename = "TestQueue";
 

@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
+﻿using System.Collections.Generic;
 
 using Amazon.SQS;
 using Amazon.SQS.Model;
 
-using Newtonsoft.Json;
-
 namespace AcklenAvenue.Queueing.Amazon.Sqs
 {
-    public class AWSSqsReceiver<TMessage> : IMessageReceiver<TMessage>
+    public abstract class AWSSqsReceiverBase<TMessage> : IMessageReceiver<TMessage>
     {
-        public AWSSqsReceiver(string awsAccessKeyId, string awsSecretAccessKey, string serviceUrl, string queueUrl)
+        protected AWSSqsReceiverBase(string awsAccessKeyId, string awsSecretAccessKey, string serviceUrl, string queueUrl)
         {
             AwsAccessKeyId = awsAccessKeyId;
             AwsSecretAccessKey = awsSecretAccessKey;
@@ -54,25 +49,14 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs
                 var messages = new List<SqsMessageReceived<TMessage>>();
                 foreach (Message message in response.Messages)
                 {
-                    string stringType = message.MessageAttributes["Type"].StringValue;
-
-                    string domain = stringType.Split('.').First();
-                    IEnumerable<Assembly> assemblies =
-                        AppDomain.CurrentDomain.GetAssemblies().Where(assembly => assembly.FullName.StartsWith(domain));
-                    List<Type> selectMany = assemblies.SelectMany(x => x.ExportedTypes).ToList();
-                    Type type = selectMany.FirstOrDefault(x => x.FullName.EndsWith(stringType));
-
-                    object deserializeObject = JsonConvert.DeserializeObject(message.Body, type);
-                    var messageReceived = new SqsMessageReceived<TMessage>
-                                              {
-                                                  ReceiptHandle = message.ReceiptHandle,
-                                                  Message = (TMessage)deserializeObject
-                                              };
+                    SqsMessageReceived<TMessage> messageReceived = CreateResponseMessage(message);
 
                     messages.Add(messageReceived);
                 }
                 return messages;
             }
         }
+
+        protected abstract SqsMessageReceived<TMessage> CreateResponseMessage(Message message);
     }
 }
