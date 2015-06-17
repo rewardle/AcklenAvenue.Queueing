@@ -18,7 +18,12 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs
 
             var extractedMessage = JsonConvert.DeserializeObject<TMessage>(snsMessage.Message);
 
-            return new SqsMessageReceived<TMessage> { Id = message.MessageId, Message = extractedMessage };
+            return new SqsMessageReceived<TMessage>
+                       {
+                           Id = message.MessageId,
+                           Message = extractedMessage,
+                           ReceiptHandle = message.ReceiptHandle
+                       };
         }
 
         public class SnsMessageAdapter
