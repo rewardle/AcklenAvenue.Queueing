@@ -10,7 +10,8 @@ namespace AcklenAvenue.Queueing.LocalFile
     public abstract class LocalFileBasedQueue<T> : IQueuePusher<T>,
                                                    IQueuePuller<T>,
                                                    IMessageReceiver<T>,
-                                                   IMessageSender<T>
+                                                   IMessageSender<T>,
+        IMessageDeleter<T>
     {
         readonly string _queueFilePath;
 
@@ -131,6 +132,11 @@ namespace AcklenAvenue.Queueing.LocalFile
                     streamWriter.Close();
                 }
             }
+        }
+
+        public void Delete(IMessageReceived<T> messageReceived)
+        {
+            //already deleted.
         }
     }
 }
