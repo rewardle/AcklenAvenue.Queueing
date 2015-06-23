@@ -27,7 +27,9 @@ namespace AcklenAvenue.Queueing.LocalFile
 
         public IEnumerable<IMessageReceived<T>> Receive()
         {
-            return new[] { new FileMessageRecived<T>(Pull()) };
+            var message = Pull();
+            if (null == message) return new List<IMessageReceived<T>>();
+            return new[] {new FileMessageRecived<T>(message)};
         }
 
         public ISendResponse Send(T message)
