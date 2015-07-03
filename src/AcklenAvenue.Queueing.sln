@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcklenAvenue.Queueing", "AcklenAvenue.Queueing\AcklenAvenue.Queueing.csproj", "{E9575764-F36B-4FEE-B99D-BAE0B1C6D89D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcklenAvenue.Queueing.LocalFile", "AcklenAvenue.Queueing.LocalFile\AcklenAvenue.Queueing.LocalFile.csproj", "{A6FE2FF7-30B7-4B5A-8A38-9D61A4F30301}"
@@ -8,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcklenAvenue.Queueing.Amazon.Sqs", "AcklenAvenue.Queueing.Amazon.Sqs\AcklenAvenue.Queueing.Amazon.Sqs.csproj", "{40BB0C79-B896-40AE-AE89-2B7BB424E751}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcklenAvenue.Queueing.Amazon.Sqs.Specs.Integration", "AcklenAvenue.Queueing.Amazon.Sqs.IntegrationSpecs\AcklenAvenue.Queueing.Amazon.Sqs.Specs.Integration.csproj", "{581F471F-B8D0-41CF-9EF0-6CE96D9252DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcklenAvenue.Queueing.Serializers.JsonNet", "AcklenAvenue.Queueing.Serializers.JsonNet\AcklenAvenue.Queueing.Serializers.JsonNet.csproj", "{9A8F7ECB-CD79-43E9-A212-89170D3EFB28}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +35,10 @@ Global
 		{581F471F-B8D0-41CF-9EF0-6CE96D9252DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{581F471F-B8D0-41CF-9EF0-6CE96D9252DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{581F471F-B8D0-41CF-9EF0-6CE96D9252DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A8F7ECB-CD79-43E9-A212-89170D3EFB28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A8F7ECB-CD79-43E9-A212-89170D3EFB28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A8F7ECB-CD79-43E9-A212-89170D3EFB28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A8F7ECB-CD79-43E9-A212-89170D3EFB28}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

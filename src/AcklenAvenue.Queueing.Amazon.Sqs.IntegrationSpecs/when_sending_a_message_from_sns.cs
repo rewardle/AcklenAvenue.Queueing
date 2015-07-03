@@ -17,7 +17,7 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs.Specs.Integration
                 string ServiceUrl = "http://sns.us-west-2.amazonaws.com";
 
                 string arnAwsSnsUsWestTest = "arn:aws:sns:us-west-2:487799950875:Test";
-                _sender = new AWSSnsSender<FakeMessage>(acces, scrt, ServiceUrl, arnAwsSnsUsWestTest);
+                _sender = new AWSSnsSender<FakeMessage>(acces, scrt, ServiceUrl, arnAwsSnsUsWestTest, new TestSerializer());
             };
 
         Because of = () => _result = _sender.Send(_fakeMessage);

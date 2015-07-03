@@ -34,10 +34,6 @@
       <HintPath>..\..\lib\AWSSDK.2.3.42.0\lib\net45\AWSSDK.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\lib\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -50,6 +46,8 @@
     <Compile Include="AWSSnsSender.cs" />
     <Compile Include="AWSSnsSubcriber.cs" />
     <Compile Include="AWSSqsReceiverBase.cs" />
+    <Compile Include="IMessageDeserializer.cs" />
+    <Compile Include="IMessageSerializer.cs" />
     <Compile Include="NormalAWSSqsReceiver.cs" />
     <Compile Include="AWSSqsSender.cs" />
     <Compile Include="IQueueSubcriber.cs" />

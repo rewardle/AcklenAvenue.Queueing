@@ -18,12 +18,12 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs.Specs.Integration
         Establish context = () =>
             {
                 var sender = new AWSSqsSender<FakeMessage>(
-                    acces, scrt, ServiceUrl, CreateQueueResponse.QueueUrl);
+                    acces, scrt, ServiceUrl, CreateQueueResponse.QueueUrl, new TestSerializer());
                 _fakeMessage = new FakeMessage { Greet = "hi" };
                 _response = sender.Send(_fakeMessage);
 
                 _messageReceiver = new NormalAWSSqsReceiver<FakeMessage>(
-                    acces, scrt, ServiceUrl, CreateQueueResponse.QueueUrl);
+                    acces, scrt, ServiceUrl, CreateQueueResponse.QueueUrl, new TestSerializer());
             };
 
         Because of = () => { _result = _messageReceiver.Receive(); };

@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-using Newtonsoft.Json;
-
 namespace AcklenAvenue.Queueing.LocalFile
 {
     public abstract class LocalFileBasedQueue<T> : IQueuePusher<T>,
@@ -12,7 +10,7 @@ namespace AcklenAvenue.Queueing.LocalFile
                                                    IMessageReceiver<T>,
                                                    IMessageSender<T>,
         IMessageDeleter<T>
-    {
+    {        
         readonly string _queueFilePath;
 
         protected LocalFileBasedQueue(string queueFilePath)
@@ -81,29 +79,22 @@ namespace AcklenAvenue.Queueing.LocalFile
             TryFileOperation(
                 () =>
                     {
-                        string json = SerializeQueueItems(commandQueueItems);
+                        string json = SerializeList(commandQueueItems);
                         File.WriteAllText(filename, json);
                         return null;
                     });
         }
 
-        protected virtual string SerializeQueueItems(List<T> commandQueueItems)
-        {
-            return JsonConvert.SerializeObject(commandQueueItems);
-        }
+        public abstract string SerializeList(List<T> commandQueueItems);
+        public abstract List<T> DeserializeList(string commandQueueItemsJson);
 
         List<T> GetObjectsFromFile(string filename)
         {
             string jsonFromFile = TryFileOperation(() => File.ReadAllText(filename));
             List<T> commandQueueItems = string.IsNullOrEmpty(jsonFromFile)
                                             ? new List<T>()
-                                            : DeserializeQueueItems(jsonFromFile);
+                                            : DeserializeList(jsonFromFile);
             return PrepareItemsForReturnToTextFile(commandQueueItems);
-        }
-
-        protected virtual List<T> DeserializeQueueItems(string jsonFromFile)
-        {
-            return JsonConvert.DeserializeObject<List<T>>(jsonFromFile);
         }
 
         static string TryFileOperation(Func<string> func)
