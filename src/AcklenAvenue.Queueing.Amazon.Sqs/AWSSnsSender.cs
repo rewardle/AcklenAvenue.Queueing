@@ -41,6 +41,7 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs
                 string messageToSend = _serializer.Serialize(message);
                 var publishRequest = new PublishRequest(TopicArn, messageToSend);
 
+                
                 response = sns.Publish(publishRequest);
             }
 

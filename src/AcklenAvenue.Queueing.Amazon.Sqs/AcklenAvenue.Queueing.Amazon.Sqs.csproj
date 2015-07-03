@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="AWSSDK, Version=2.3.42.0, Culture=neutral, PublicKeyToken=9f476d3089b52be3, processorArchitecture=MSIL">
       <HintPath>..\..\lib\AWSSDK.2.3.42.0\lib\net45\AWSSDK.dll</HintPath>
       <Private>True</Private>
@@ -48,6 +52,24 @@
     <Compile Include="AWSSqsReceiverBase.cs" />
     <Compile Include="IMessageDeserializer.cs" />
     <Compile Include="IMessageSerializer.cs" />
+
+
+
+
+
+
+
+
+    <Compile Include="Builder\AwsConfig.cs" />
+    <Compile Include="Builder\BusBuilder.cs" />
+    <Compile Include="Builder\CommandConfiguration.cs" />
+    <Compile Include="Builder\EventConfiguration.cs" />
+    <Compile Include="Builder\ICommandConfiguration.cs" />
+    <Compile Include="Builder\IEventConfiguration.cs" />
+    <Compile Include="Builder\IQueueConfiguration.cs" />
+    <Compile Include="Builder\QueueConfigurationBase.cs" />
+    <Compile Include="Builder\SnsConfig.cs" />
+    <Compile Include="Builder\SqsConfig.cs" />
     <Compile Include="NormalAWSSqsReceiver.cs" />
     <Compile Include="AWSSqsSender.cs" />
     <Compile Include="IQueueSubcriber.cs" />
