@@ -1,4 +1,6 @@
-﻿using Autofac;
+﻿using System;
+
+using Autofac;
 
 namespace AcklenAvenue.Queueing.Amazon.Sqs.Builder
 {
@@ -20,6 +22,10 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs.Builder
         protected IEventConfiguration EventQueueConfiguration { get; set; }
 
         public AwsConfig AwsConfig { get; private set; }
+
+        protected Type SerializerType { get; set; }
+
+        protected Type DeserializerType { get; set; }
 
         public BusBuilder ConfigureSns(string snsServiceUrl, string topicArn)
         {
@@ -46,10 +52,44 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs.Builder
             return EventQueueConfiguration;
         }
 
+        public BusBuilder UseSerializer<TSerialiezer>() where TSerialiezer : IMessageSerializer
+        {
+            SerializerType = typeof(TSerialiezer);
+            return this;
+        }
+
+        public BusBuilder UseDeserializer<TDeserializer>() where TDeserializer : IMessageDeserializer
+        {
+            DeserializerType = typeof(TDeserializer);
+            return this;
+        }
+
         public void BuildInContainer(ContainerBuilder builder)
         {
+            if (SerializerType != null)
+            {
+                builder.RegisterType(SerializerType).As<IMessageSerializer>();
+            }
+            else
+            {
+                throw new Exception(
+                    string.Format(
+                        "No serializer is registered to build the queue, please call the method 'UseSerializer<>()' to set a serialzer"));
+            }
+
+            if (DeserializerType != null)
+            {
+                builder.RegisterType(DeserializerType).As<IMessageDeserializer>();
+            }
+            else
+            {
+                throw new Exception(
+                    string.Format(
+                        "No deserializer is registered to build the queue, please call the method 'UseDeserializer<>()' to set a deserialzer"));
+            }
+
             CommandQueueConfiguration.Build(builder, AwsConfig, SqsConfiguration);
-            EventQueueConfiguration.Build(builder,AwsConfig,SqsConfiguration, SnsConfiguration);
+            EventQueueConfiguration.Build(builder, AwsConfig, SqsConfiguration, SnsConfiguration);
         }
     }
 }

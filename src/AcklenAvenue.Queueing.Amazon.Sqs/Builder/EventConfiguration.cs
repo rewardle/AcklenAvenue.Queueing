@@ -1,4 +1,6 @@
-﻿using Autofac;
+﻿using System;
+
+using Autofac;
 
 namespace AcklenAvenue.Queueing.Amazon.Sqs.Builder
 {
@@ -29,17 +31,27 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs.Builder
 
             containerBuilder.Register(
                 context =>
-                new SnsMessageSqsReceiver<TEventMessage>(
-                    awsAccessKeyId, awsSecretAccessKey, sqsServiceUrl, eventQueueUrl)
                     {
-                        MaxNumberOfMessages = MaxNumberOfMessages,
-                        VisibilityTimeOut = VisibilityTimeOut
-                    })
-                            .As<IMessageReceiver<TEventMessage>>();
+                        IMessageDeserializer serializer = ResolverDeserialzer(context);
+                        return new SnsMessageSqsReceiver<TEventMessage>(
+                            awsAccessKeyId, awsSecretAccessKey, sqsServiceUrl, eventQueueUrl, serializer)
+                                   {
+                                       MaxNumberOfMessages
+                                           =
+                                           MaxNumberOfMessages,
+                                       VisibilityTimeOut
+                                           =
+                                           VisibilityTimeOut
+                                   };
+                    }).As<IMessageReceiver<TEventMessage>>();
 
             containerBuilder.Register(
-                context => new AWSSnsSender<TEventMessage>(awsAccessKeyId, awsSecretAccessKey, snsServiceUrl, topicArn))
-                            .As<IMessageSender<TEventMessage>>();
+                context =>
+                    {
+                        IMessageSerializer messageSerializer = ResoverSerialzer(context);
+                        return new AWSSnsSender<TEventMessage>(
+                            awsAccessKeyId, awsSecretAccessKey, snsServiceUrl, topicArn, messageSerializer);
+                    }).As<IMessageSender<TEventMessage>>();
 
             containerBuilder.Register(
                 context =>
@@ -48,6 +60,30 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs.Builder
 
             EventQueueSubscribesToNotifications(
                 awsAccessKeyId, awsSecretAccessKey, snsServiceUrl, sqsServiceUrl, eventQueueUrl, topicArn);
+        }
+
+        static IMessageSerializer ResoverSerialzer(IComponentContext context)
+        {
+            if (!context.IsRegistered<IMessageSerializer>())
+            {
+                throw new Exception(
+                    string.Format(
+                        "There is no message Serializer in the container, please register an implementation for IMessageSerializer in the container"));
+            }
+            var serializer = context.Resolve<IMessageSerializer>();
+            return serializer;
+        }
+
+        static IMessageDeserializer ResolverDeserialzer(IComponentContext context)
+        {
+            if (!context.IsRegistered<IMessageDeserializer>())
+            {
+                throw new Exception(
+                    string.Format(
+                        "There is no message deserializer in the container, please register an implementation for IMessageDeserializer in the container"));
+            }
+            var serializer = context.Resolve<IMessageDeserializer>();
+            return serializer;
         }
 
         static void EventQueueSubscribesToNotifications(

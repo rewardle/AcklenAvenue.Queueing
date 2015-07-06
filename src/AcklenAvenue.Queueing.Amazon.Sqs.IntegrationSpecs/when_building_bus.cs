@@ -14,15 +14,17 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs.Specs.Integration
 
         Because of = () =>
             {
-                var builder = new BusBuilder("AKIAICDZWES32E4QZQNA", "UrEIS7fz0qb1MqJnei0mHOTfHjiwU0XRg7rhX8S+");
+                var builder = new BusBuilder("clientid ", "secret");
                 var containerBuilder = new ContainerBuilder();
 
                 builder.ConfigureSns(
-                    "http://sns.us-west-2.amazonaws.com", "arn:aws:sns:us-west-2:487799950875:Rewardle_local_saul")
+                    "http://sns.us-west-2.amazonaws.com", "arn")
                        .ConfigureSqs("http://sqs.us-west-2.amazonaws.com")
                        .ConfigureCommandQueues<FakeCommand>("fakeQueueCommand")
                        .SetMaxNumberOfMessages(10)
                        .SetVisibilityTimeOut(120)
+                       .UseSerializer<TestSerializer>()
+                       .UseDeserializer<TestSerializer>()
                        .ConfigureEventQueue<FakeEvent>("fakeQueueEvents")
                        .SetMaxNumberOfMessages(10)
                        .SetVisibilityTimeOut(120)
