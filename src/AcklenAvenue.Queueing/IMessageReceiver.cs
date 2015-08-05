@@ -1,9 +1,10 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AcklenAvenue.Queueing
 {
     public interface IMessageReceiver<TMessage>
     {
-        IEnumerable<IMessageReceived<TMessage>> Receive();
+        Task<IEnumerable<IMessageReceived<TMessage>>> Receive();
     }
 }

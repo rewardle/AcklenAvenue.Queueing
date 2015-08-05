@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace AcklenAvenue.Queueing.LocalFile
 {
@@ -23,17 +24,16 @@ namespace AcklenAvenue.Queueing.LocalFile
             _queueFilePath = queueFilePath;
         }
 
-        public IEnumerable<IMessageReceived<T>> Receive()
+        public async Task<IEnumerable<IMessageReceived<T>>> Receive()
         {
             var message = Pull();
             if (null == message) return new List<IMessageReceived<T>>();
-            return new[] {new FileMessageRecived<T>(message)};
+            return new[] {new FileMessageRecived<T>(message)};            
         }
 
-        public ISendResponse Send(T message)
+        public async Task<ISendResponse> Send(T message)
         {
             Push(message);
-
             return new FileSendReponse("Ok");
         }
 

@@ -1,4 +1,5 @@
-﻿using Amazon.SimpleNotificationService;
+﻿using System.Threading.Tasks;
+using Amazon.SimpleNotificationService;
 using Amazon.SimpleNotificationService.Model;
 using AWS = Amazon;
 
@@ -25,7 +26,7 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs
 
         public string TopicArn { get; set; }
 
-        public ISendResponse Send(TMessage message)
+        public async Task<ISendResponse> Send(TMessage message)
         {
             var config = new AmazonSimpleNotificationServiceConfig
                          {
@@ -41,7 +42,7 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs
                 string messageToSend = _serializer.Serialize(message);
                 var publishRequest = new PublishRequest(TopicArn, messageToSend);
 
-                response = sns.Publish(publishRequest);
+                response = await sns.PublishAsync(publishRequest);
             }
 
             return new SendResponse(response.MessageId);

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-
+using System.Threading.Tasks;
 using Machine.Specifications;
 
 namespace AcklenAvenue.Queueing.Amazon.Sqs.Specs.Integration
@@ -20,13 +20,20 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs.Specs.Integration
                 var sender = new AWSSqsSender<FakeMessage>(
                     acces, scrt, ServiceUrl, CreateQueueResponse.QueueUrl, new TestSerializer());
                 _fakeMessage = new FakeMessage { Greet = "hi" };
-                _response = sender.Send(_fakeMessage);
+                Task<ISendResponse> sendTask = sender.Send(_fakeMessage);
+                sendTask.Wait();
+                _response = sendTask.Result;
 
                 _messageReceiver = new NormalAWSSqsReceiver<FakeMessage>(
                     acces, scrt, ServiceUrl, CreateQueueResponse.QueueUrl, new TestSerializer());
             };
 
-        Because of = () => { _result = _messageReceiver.Receive(); };
+        Because of = () =>
+                     {
+                         Task<IEnumerable<IMessageReceived<FakeMessage>>> receiveTask = _messageReceiver.Receive();
+                         receiveTask.Wait();
+                         _result = receiveTask.Result;
+                     };
 
         It should_return_message_of_the_same_type = () => _result.First().Message.ShouldBeAssignableTo<FakeMessage>();
 

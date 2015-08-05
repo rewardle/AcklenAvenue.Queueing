@@ -4,6 +4,6 @@ namespace AcklenAvenue.Queueing
 {
     public interface IMessageSender<in TMessage>
     {
-        ISendResponse Send(TMessage message);
+        Task<ISendResponse> Send(TMessage message);
     }
 }

@@ -1,4 +1,5 @@
-﻿using Amazon.SQS.Model;
+﻿using System.Threading.Tasks;
+using Amazon.SQS.Model;
 using Machine.Specifications;
 using Newtonsoft.Json;
 
@@ -23,7 +24,9 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs.Specs.Integration
                      {
                          _fakeMessage = new FakeMessage {Greet = "hi"};
                          _messageSender.Delay = 1;
-                         _result = _messageSender.Send(_fakeMessage);
+                         Task<ISendResponse> sendTask = _messageSender.Send(_fakeMessage);
+                         sendTask.Wait();
+                         _result = sendTask.Result;
                      };
 
         It should_be_able_to_get_the_message_from_the_queue = () =>

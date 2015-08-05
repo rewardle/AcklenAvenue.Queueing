@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-
+using System.Threading.Tasks;
 using Amazon.SQS;
 using Amazon.SQS.Model;
 
@@ -29,7 +29,7 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs
 
         public int VisibilityTimeOut { get; set; }
 
-        public IEnumerable<IMessageReceived<TMessage>> Receive()
+        public async Task<IEnumerable<IMessageReceived<TMessage>>> Receive()
         {
             var amazonSqsConfig = new AmazonSQSConfig { ServiceURL = ServiceUrl };
 
@@ -44,7 +44,7 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs
                                                 };
                 receiveMessageRequest.MessageAttributeNames.Add("All");
 
-                ReceiveMessageResponse response = sqsClient.ReceiveMessageAsync(receiveMessageRequest).Result;
+                ReceiveMessageResponse response = await sqsClient.ReceiveMessageAsync(receiveMessageRequest);
 
                 var messages = new List<SqsMessageReceived<TMessage>>();
                 foreach (Message message in response.Messages)

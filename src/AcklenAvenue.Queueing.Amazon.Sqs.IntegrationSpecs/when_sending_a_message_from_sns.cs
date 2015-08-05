@@ -1,4 +1,5 @@
-﻿using Machine.Specifications;
+﻿using System.Threading.Tasks;
+using Machine.Specifications;
 
 namespace AcklenAvenue.Queueing.Amazon.Sqs.Specs.Integration
 {
@@ -20,7 +21,12 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs.Specs.Integration
                 _sender = new AWSSnsSender<FakeMessage>(acces, scrt, ServiceUrl, arnAwsSnsUsWestTest, new TestSerializer());
             };
 
-        Because of = () => _result = _sender.Send(_fakeMessage);
+        Because of = () =>
+                     {
+                         Task<ISendResponse> sendTask = _sender.Send(_fakeMessage);
+                         sendTask.Wait();
+                         _result = sendTask.Result;
+                     };
 
         It should_recieve_message_in_subscribres = () => _result.ShouldNotBeNull();
     }
