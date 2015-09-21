@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using AcklenAvenue.Queueing.Amazon.Sqs.Builder;
 using Machine.Specifications;
 
 namespace AcklenAvenue.Queueing.Amazon.Sqs.Specs.Integration
@@ -18,7 +19,7 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs.Specs.Integration
                 string ServiceUrl = "http://sns.us-west-2.amazonaws.com";
 
                 string arnAwsSnsUsWestTest = "arn:aws:sns:us-west-2:487799950875:Test";
-                _sender = new AWSSnsSender<FakeMessage>(acces, scrt, ServiceUrl, arnAwsSnsUsWestTest, new TestSerializer());
+                _sender = new AWSSnsSender<FakeMessage>(new IAMRolesConfig(), ServiceUrl, arnAwsSnsUsWestTest, new TestSerializer());
             };
 
         Because of = () =>

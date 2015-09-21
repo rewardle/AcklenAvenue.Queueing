@@ -32,7 +32,7 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs.Specs.Integration
 
                 AmazonSqsConfig = new AmazonSQSConfig { ServiceURL = ServiceUrl };
 
-                Sqs = new AmazonSQSClient(acces, scrt, AmazonSqsConfig);
+                Sqs = new AmazonSQSClient( AmazonSqsConfig);
 
                 CreateQueueResponse = Sqs.CreateQueue(Queuename);
             };

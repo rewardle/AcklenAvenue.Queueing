@@ -13,19 +13,18 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs.Builder
 
         public string QueueName { get; set; }
 
-        public void Build(ContainerBuilder containerBuilder, AwsConfig awsConfig, SqsConfig sqsConfiguration)
+        public void Build(ContainerBuilder containerBuilder, IAwsConfig awsConfig, SqsConfig sqsConfiguration)
         {
-            string awsAccessKeyId = awsConfig.AccessKey;
-            string awsSecretAccessKey = awsConfig.SecretKey;
+           
             string sqsServiceUrl = sqsConfiguration.SqsServiceUrl;
             string commandQueue = QueueName;
             string commandQueueUrl =
-                new QueueCreator(awsAccessKeyId, awsSecretAccessKey, sqsServiceUrl).CreateQueue(commandQueue);
+                new QueueCreator(awsConfig, sqsServiceUrl).CreateQueue(commandQueue);
 
             containerBuilder.Register(
                 context =>
                 new NormalAWSSqsReceiver<TCommandQueueMessage>(
-                    awsAccessKeyId, awsSecretAccessKey, sqsServiceUrl, commandQueueUrl, ResolverDeserialzer(context))
+                    awsConfig, sqsServiceUrl, commandQueueUrl, ResolverDeserialzer(context))
                     {
                         MaxNumberOfMessages
                             =
@@ -39,13 +38,13 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs.Builder
             containerBuilder.Register(
                 context =>
                 new SqsMessageDeleter<TCommandQueueMessage>(
-                    awsAccessKeyId, awsSecretAccessKey, sqsServiceUrl, commandQueueUrl))
+                    awsConfig, sqsServiceUrl, commandQueueUrl))
                             .As<IMessageDeleter<TCommandQueueMessage>>();
 
             containerBuilder.Register(
                 context =>
                 new AWSSqsSender<TCommandQueueMessage>(
-                    awsAccessKeyId, awsSecretAccessKey, sqsServiceUrl, commandQueueUrl, ResoverSerialzer(context)))
+                    awsConfig, sqsServiceUrl, commandQueueUrl, ResoverSerialzer(context)))
                             .As<IMessageSender<TCommandQueueMessage>>();
         }
 

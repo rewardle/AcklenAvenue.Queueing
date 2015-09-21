@@ -13,28 +13,22 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs.Builder
 
         public string QueueName { get; set; }
 
-        public void Build(
-            ContainerBuilder containerBuilder,
-            AwsConfig awsConfig,
-            SqsConfig sqsConfiguration,
-            SnsConfig snsConfiguration)
+        public void Build(ContainerBuilder containerBuilder, IAwsConfig awsConfig, SqsConfig sqsConfiguration, SnsConfig snsConfiguration)
         {
-            string awsAccessKeyId = awsConfig.AccessKey;
-            string awsSecretAccessKey = awsConfig.SecretKey;
             string sqsServiceUrl = sqsConfiguration.SqsServiceUrl;
             string snsServiceUrl = snsConfiguration.SnsServiceUrl;
             string eventQueue = QueueName;
             string topicArn = snsConfiguration.TopicArn;
 
             string eventQueueUrl =
-                new QueueCreator(awsAccessKeyId, awsSecretAccessKey, sqsServiceUrl).CreateQueue(eventQueue);
+                new QueueCreator(awsConfig, sqsServiceUrl).CreateQueue(eventQueue);
 
             containerBuilder.Register(
                 context =>
                     {
                         IMessageDeserializer serializer = ResolverDeserialzer(context);
                         return new SnsMessageSqsReceiver<TEventMessage>(
-                            awsAccessKeyId, awsSecretAccessKey, sqsServiceUrl, eventQueueUrl, serializer)
+                            awsConfig, sqsServiceUrl, eventQueueUrl, serializer)
                                    {
                                        MaxNumberOfMessages
                                            =
@@ -50,17 +44,17 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs.Builder
                     {
                         IMessageSerializer messageSerializer = ResoverSerialzer(context);
                         return new AWSSnsSender<TEventMessage>(
-                            awsAccessKeyId, awsSecretAccessKey, snsServiceUrl, topicArn, messageSerializer);
+                            awsConfig, snsServiceUrl, topicArn, messageSerializer);
                     }).As<IMessageSender<TEventMessage>>();
 
             containerBuilder.Register(
                 context =>
-                new SqsMessageDeleter<TEventMessage>(awsAccessKeyId, awsSecretAccessKey, sqsServiceUrl, eventQueueUrl))
+                new SqsMessageDeleter<TEventMessage>(awsConfig, sqsServiceUrl, eventQueueUrl))
                             .As<IMessageDeleter<TEventMessage>>();
 
             EventQueueSubscribesToNotifications(
-                awsAccessKeyId, awsSecretAccessKey, snsServiceUrl, sqsServiceUrl, eventQueueUrl, topicArn);
-        }
+                awsConfig, snsServiceUrl, sqsServiceUrl, eventQueueUrl, topicArn);
+        }       
 
         static IMessageSerializer ResoverSerialzer(IComponentContext context)
         {
@@ -87,15 +81,14 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs.Builder
         }
 
         static void EventQueueSubscribesToNotifications(
-            string awsAccessKeyId,
-            string awsSecretAccessKey,
+            IAwsConfig awsConfig,
             string snsServiceUrl,
             string sqsServiceUrl,
             string eventQueueUrl,
             string topicArn)
         {
             var notificationSubscriber = new AWSSnsSubcriber(
-                awsAccessKeyId, awsSecretAccessKey, snsServiceUrl, sqsServiceUrl, topicArn);
+                awsConfig, snsServiceUrl, sqsServiceUrl, topicArn);
             notificationSubscriber.Subscribe(eventQueueUrl);
         }
     }

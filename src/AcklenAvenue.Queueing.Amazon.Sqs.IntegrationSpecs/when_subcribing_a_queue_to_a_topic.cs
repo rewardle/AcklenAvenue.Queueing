@@ -1,4 +1,5 @@
-﻿using Machine.Specifications;
+﻿using AcklenAvenue.Queueing.Amazon.Sqs.Builder;
+using Machine.Specifications;
 
 namespace AcklenAvenue.Queueing.Amazon.Sqs.Specs.Integration
 {
@@ -14,14 +15,13 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs.Specs.Integration
 
         Establish context = () =>
             {
-                string acces = "acces";
-                string scrt = "key+";
+             
                 const string SnsServiceUrl = "http://sns.us-west-2.amazonaws.com";
                 const string sqsServiceUrl = "http://sqs.us-west-2.amazonaws.com";
-                _queueUrl = "https://sqs.us-west-2.amazonaws.com/487799950875/otra";
+                _queueUrl = "https://sqs.us-west-2.amazonaws.com/487799950875/testq";
                 _topicArn = "arn:aws:sns:us-west-2:487799950875:Test";
 
-                _queueSubcriber = new AWSSnsSubcriber(acces, scrt, SnsServiceUrl, sqsServiceUrl, _topicArn);
+                _queueSubcriber = new AWSSnsSubcriber(new IAMRolesConfig(), SnsServiceUrl, sqsServiceUrl, _topicArn);
             };
 
         Because of = () => _result = _queueSubcriber.Subscribe(_queueUrl);

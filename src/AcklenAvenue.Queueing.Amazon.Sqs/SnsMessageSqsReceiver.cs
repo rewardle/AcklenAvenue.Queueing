@@ -1,4 +1,5 @@
-﻿using Amazon.SQS.Model;
+﻿using AcklenAvenue.Queueing.Amazon.Sqs.Builder;
+using Amazon.SQS.Model;
 
 namespace AcklenAvenue.Queueing.Amazon.Sqs
 {
@@ -7,8 +8,8 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs
         readonly IMessageDeserializer _deserializer;
 
         public SnsMessageSqsReceiver(
-            string awsAccessKeyId, string awsSecretAccessKey, string serviceUrl, string queueUrl, IMessageDeserializer deserializer)
-            : base(awsAccessKeyId, awsSecretAccessKey, serviceUrl, queueUrl)
+            IAwsConfig awsConfig, string serviceUrl, string queueUrl, IMessageDeserializer deserializer)
+            : base(awsConfig, serviceUrl, queueUrl)
         {
             _deserializer = deserializer;
         }
