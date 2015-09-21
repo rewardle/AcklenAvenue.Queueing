@@ -13,14 +13,10 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs.Builder
 
         public string QueueName { get; set; }
 
-        public void Build(
-            ContainerBuilder containerBuilder,
-            AwsConfig awsConfig,
-            SqsConfig sqsConfiguration,
-            SnsConfig snsConfiguration)
+        public void Build(ContainerBuilder containerBuilder, IAwsConfig keyAwsConfig, SqsConfig sqsConfiguration, SnsConfig snsConfiguration)
         {
-            string awsAccessKeyId = awsConfig.AccessKey;
-            string awsSecretAccessKey = awsConfig.SecretKey;
+            string awsAccessKeyId = keyAwsConfig.AccessKey;
+            string awsSecretAccessKey = keyAwsConfig.SecretKey;
             string sqsServiceUrl = sqsConfiguration.SqsServiceUrl;
             string snsServiceUrl = snsConfiguration.SnsServiceUrl;
             string eventQueue = QueueName;

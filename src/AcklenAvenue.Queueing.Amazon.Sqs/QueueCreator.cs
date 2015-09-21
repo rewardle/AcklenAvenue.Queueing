@@ -21,7 +21,7 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs
         public string CreateQueue(string queueName)
         {
             var amazonSqsConfig = new AmazonSQSConfig { ServiceURL = ServiceUrl };
-
+            var dd = new AmazonSQSClient();
             using (var sqsClient = new AmazonSQSClient(AwsAccessKeyId, AwsSecretAccessKey, amazonSqsConfig))
             {
                 CreateQueueResponse response = sqsClient.CreateQueue(new CreateQueueRequest(queueName));

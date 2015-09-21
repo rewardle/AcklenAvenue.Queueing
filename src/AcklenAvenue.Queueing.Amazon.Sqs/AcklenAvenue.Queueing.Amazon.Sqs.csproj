@@ -50,17 +50,11 @@
     <Compile Include="AWSSnsSender.cs" />
     <Compile Include="AWSSnsSubcriber.cs" />
     <Compile Include="AWSSqsReceiverBase.cs" />
+    <Compile Include="Builder\IAMRolesConfig.cs" />
+    <Compile Include="Builder\IAwsConfig.cs" />
     <Compile Include="IMessageDeserializer.cs" />
     <Compile Include="IMessageSerializer.cs" />
-
-
-
-
-
-
-
-
-    <Compile Include="Builder\AwsConfig.cs" />
+    <Compile Include="Builder\KeyAwsConfig.cs" />
     <Compile Include="Builder\BusBuilder.cs" />
     <Compile Include="Builder\CommandConfiguration.cs" />
     <Compile Include="Builder\EventConfiguration.cs" />
