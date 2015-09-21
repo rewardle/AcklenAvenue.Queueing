@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using AcklenAvenue.Queueing.Amazon.Sqs.Builder;
 using Amazon.SimpleNotificationService;
 using Amazon.SimpleNotificationService.Model;
 using AWS = Amazon;
@@ -7,23 +8,18 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs
 {
     public class AWSSnsSender<TMessage> : IMessageSender<TMessage>
     {
+        readonly IAwsConfig _awsConfig;
         readonly IMessageSerializer _serializer;
 
-        public AWSSnsSender(string accessKey, string secretKey, string serviceUrl, string topicArn, IMessageSerializer serializer)
+        public AWSSnsSender(IAwsConfig awsConfig, string serviceUrl, string topicArn, IMessageSerializer serializer)
         {
+            _awsConfig = awsConfig;
             _serializer = serializer;
-            AccessKey = accessKey;
-            SecretKey = secretKey;
             ServiceUrl = serviceUrl;
             TopicArn = topicArn;
         }
 
-        public string AccessKey { get; set; }
-
-        public string SecretKey { get; set; }
-
         public string ServiceUrl { get; set; }
-
         public string TopicArn { get; set; }
 
         public async Task<ISendResponse> Send(TMessage message)
@@ -36,10 +32,9 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs
 
             PublishResponse response;
             using (
-                var sns = new AmazonSimpleNotificationServiceClient(
-                    AccessKey, SecretKey, config))
+                var sns = _awsConfig.CreateAwsClient<AmazonSimpleNotificationServiceClient>(config))
             {
-                string messageToSend = _serializer.Serialize(message);
+                var messageToSend = _serializer.Serialize(message);
                 var publishRequest = new PublishRequest(TopicArn, messageToSend);
 
                 response = await sns.PublishAsync(publishRequest);

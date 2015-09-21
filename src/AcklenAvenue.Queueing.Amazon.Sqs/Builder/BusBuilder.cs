@@ -8,11 +8,18 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs.Builder
     {
         public BusBuilder(string accessKey, string secretKey)
         {
-            KeyAwsConfig = new KeyAwsConfig(accessKey, secretKey);
+            AwsConfig = new KeyAwsConfig(accessKey, secretKey);
             SnsConfiguration = new SnsConfig(string.Empty, string.Empty);
             SqsConfiguration = new SqsConfig(string.Empty);
         }
 
+        public BusBuilder()
+        {
+            AwsConfig = new IAMRolesConfig();
+            SnsConfiguration = new SnsConfig(string.Empty, string.Empty);
+            SqsConfiguration = new SqsConfig(string.Empty);
+
+        }
         protected SnsConfig SnsConfiguration { get; set; }
 
         protected SqsConfig SqsConfiguration { get; set; }
@@ -21,7 +28,7 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs.Builder
 
         protected IEventConfiguration EventQueueConfiguration { get; set; }
 
-        public IAwsConfig KeyAwsConfig { get; private set; }
+        public IAwsConfig AwsConfig { get; private set; }
 
         protected Type SerializerType { get; set; }
 
@@ -88,8 +95,8 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs.Builder
                         "No deserializer is registered to build the queue, please call the method 'UseDeserializer<>()' to set a deserialzer"));
             }
 
-            CommandQueueConfiguration.Build(builder, KeyAwsConfig, SqsConfiguration);
-            EventQueueConfiguration.Build(builder, KeyAwsConfig, SqsConfiguration, SnsConfiguration);
+            CommandQueueConfiguration.Build(builder, AwsConfig, SqsConfiguration);
+            EventQueueConfiguration.Build(builder, AwsConfig, SqsConfiguration, SnsConfiguration);
         }
     }
 }

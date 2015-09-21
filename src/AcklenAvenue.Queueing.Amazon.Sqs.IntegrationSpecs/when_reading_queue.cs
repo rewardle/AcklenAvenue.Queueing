@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AcklenAvenue.Queueing.Amazon.Sqs.Builder;
 using Machine.Specifications;
 
 namespace AcklenAvenue.Queueing.Amazon.Sqs.Specs.Integration
@@ -18,14 +19,14 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs.Specs.Integration
         Establish context = () =>
             {
                 var sender = new AWSSqsSender<FakeMessage>(
-                    acces, scrt, ServiceUrl, CreateQueueResponse.QueueUrl, new TestSerializer());
+                    new IAMRolesConfig(), ServiceUrl, CreateQueueResponse.QueueUrl, new TestSerializer());
                 _fakeMessage = new FakeMessage { Greet = "hi" };
                 Task<ISendResponse> sendTask = sender.Send(_fakeMessage);
                 sendTask.Wait();
                 _response = sendTask.Result;
 
                 _messageReceiver = new NormalAWSSqsReceiver<FakeMessage>(
-                    acces, scrt, ServiceUrl, CreateQueueResponse.QueueUrl, new TestSerializer());
+                    new IAMRolesConfig(), ServiceUrl, CreateQueueResponse.QueueUrl, new TestSerializer());
             };
 
         Because of = () =>

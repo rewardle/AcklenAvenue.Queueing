@@ -5,6 +5,6 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs.Builder
 {
     public interface IAwsConfig
     {
-        TClient CreateClientRequest<TClient>(ClientConfig amazonSqsConfig) where TClient : AmazonServiceClient;
+        TClient CreateAwsClient<TClient>(ClientConfig clientConfig) where TClient : AmazonServiceClient;
     }
 }

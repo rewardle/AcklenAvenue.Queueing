@@ -15,20 +15,9 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs.Builder
         public string AccessKey { get; set; }
         public string SecretKey { get; set; }
 
-        public TClient CreateClientRequest<TClient>(ClientConfig amazonSqsConfig) where TClient : AmazonServiceClient
+        public TClient CreateAwsClient<TClient>(ClientConfig clientConfig) where TClient : AmazonServiceClient
         {
-            var serviceType = typeof (TClient);
-
-
-            var ctor = serviceType.GetConstructor(new[] {typeof (string), typeof (string), typeof (ClientConfig)});
-            if (ctor == null)
-                throw new Exception(
-                    string.Format(
-                        "Cant create an instance of {0} service, because we cant find the correct constructor",
-                        typeof (TClient).Name));
-
-
-            var instance = ctor.Invoke(new object[] {AccessKey, SecretKey, amazonSqsConfig});
+            var instance = Activator.CreateInstance(typeof (TClient), AccessKey, SecretKey, clientConfig);
 
 
             return (TClient) instance;

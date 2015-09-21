@@ -14,11 +14,11 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs.Specs.Integration
 
         Because of = () =>
             {
-                var builder = new BusBuilder("clientid ", "secret");
+                var builder = new BusBuilder();
                 var containerBuilder = new ContainerBuilder();
 
                 builder.ConfigureSns(
-                    "http://sns.us-west-2.amazonaws.com", "arn")
+                    "http://sns.us-west-2.amazonaws.com", "arn:aws:sns:us-west-2:487799950875:Test")
                        .ConfigureSqs("http://sqs.us-west-2.amazonaws.com")
                        .ConfigureCommandQueues<FakeCommand>("fakeQueueCommand")
                        .SetMaxNumberOfMessages(10)

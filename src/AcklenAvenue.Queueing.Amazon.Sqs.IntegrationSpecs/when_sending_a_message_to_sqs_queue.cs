@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using AcklenAvenue.Queueing.Amazon.Sqs.Builder;
 using Amazon.SQS.Model;
 using Machine.Specifications;
 using Newtonsoft.Json;
@@ -17,7 +18,7 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs.Specs.Integration
             () =>
             {
                 _messageSender = new AWSSqsSender<FakeMessage>(
-                    acces, scrt, ServiceUrl, CreateQueueResponse.QueueUrl, new TestSerializer());
+                    new IAMRolesConfig(), ServiceUrl, CreateQueueResponse.QueueUrl, new TestSerializer());
             };
 
         Because of = () =>

@@ -1,30 +1,29 @@
-﻿using Amazon.SQS;
+﻿using AcklenAvenue.Queueing.Amazon.Sqs.Builder;
+using Amazon.SQS;
 using Amazon.SQS.Model;
 
 namespace AcklenAvenue.Queueing.Amazon.Sqs
 {
     public class QueueCreator : IQueueCreator
     {
-        public QueueCreator(string awsAccessKeyId, string awsSecretAccessKey, string serviceUrl)
+        readonly IAwsConfig _awsConfig;
+
+        public QueueCreator(IAwsConfig awsConfig, string serviceUrl)
         {
-            AwsAccessKeyId = awsAccessKeyId;
-            AwsSecretAccessKey = awsSecretAccessKey;
+            _awsConfig = awsConfig;
+
             ServiceUrl = serviceUrl;
         }
-
-        public string AwsAccessKeyId { get; set; }
-
-        public string AwsSecretAccessKey { get; set; }
 
         public string ServiceUrl { get; set; }
 
         public string CreateQueue(string queueName)
         {
-            var amazonSqsConfig = new AmazonSQSConfig { ServiceURL = ServiceUrl };
-            var dd = new AmazonSQSClient();
-            using (var sqsClient = new AmazonSQSClient(AwsAccessKeyId, AwsSecretAccessKey, amazonSqsConfig))
+            var amazonSqsConfig = new AmazonSQSConfig {ServiceURL = ServiceUrl};
+
+            using (var sqsClient = _awsConfig.CreateAwsClient<AmazonSQSClient>(amazonSqsConfig))
             {
-                CreateQueueResponse response = sqsClient.CreateQueue(new CreateQueueRequest(queueName));
+                var response = sqsClient.CreateQueue(new CreateQueueRequest(queueName));
 
                 return response.QueueUrl;
             }

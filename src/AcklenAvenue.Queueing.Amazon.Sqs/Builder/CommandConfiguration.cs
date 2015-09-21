@@ -24,7 +24,7 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs.Builder
             containerBuilder.Register(
                 context =>
                 new NormalAWSSqsReceiver<TCommandQueueMessage>(
-                    awsAccessKeyId, awsSecretAccessKey, sqsServiceUrl, commandQueueUrl, ResolverDeserialzer(context))
+                    awsConfig, sqsServiceUrl, commandQueueUrl, ResolverDeserialzer(context))
                     {
                         MaxNumberOfMessages
                             =
@@ -38,13 +38,13 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs.Builder
             containerBuilder.Register(
                 context =>
                 new SqsMessageDeleter<TCommandQueueMessage>(
-                    awsAccessKeyId, awsSecretAccessKey, sqsServiceUrl, commandQueueUrl))
+                    awsConfig, sqsServiceUrl, commandQueueUrl))
                             .As<IMessageDeleter<TCommandQueueMessage>>();
 
             containerBuilder.Register(
                 context =>
                 new AWSSqsSender<TCommandQueueMessage>(
-                    awsAccessKeyId, awsSecretAccessKey, sqsServiceUrl, commandQueueUrl, ResoverSerialzer(context)))
+                    awsConfig, sqsServiceUrl, commandQueueUrl, ResoverSerialzer(context)))
                             .As<IMessageSender<TCommandQueueMessage>>();
         }
 
