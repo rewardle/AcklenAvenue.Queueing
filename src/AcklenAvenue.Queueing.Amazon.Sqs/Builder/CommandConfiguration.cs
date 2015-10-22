@@ -13,11 +13,14 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs.Builder
 
         public string QueueName { get; set; }
 
-        public void Build(ContainerBuilder containerBuilder, IAwsConfig awsConfig, SqsConfig sqsConfiguration)
+        public void Build(ContainerBuilder containerBuilder, IAwsConfig awsConfig, SqsConfig sqsConfiguration, SnsConfig snsConfiguration)
         {
            
             string sqsServiceUrl = sqsConfiguration.SqsServiceUrl;
+            string snsServiceUrl = snsConfiguration.SnsServiceUrl;
             string commandQueue = QueueName;
+            string topicArn = snsConfiguration.TopicArn;
+
             string commandQueueUrl =
                 new QueueCreator(awsConfig, sqsServiceUrl).CreateQueue(commandQueue);
 
@@ -43,9 +46,12 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs.Builder
 
             containerBuilder.Register(
                 context =>
-                new AWSSqsSender<TCommandQueueMessage>(
-                    awsConfig, sqsServiceUrl, commandQueueUrl, ResoverSerialzer(context)))
+                new AWSSnsSender<TCommandQueueMessage>(
+                    awsConfig, snsServiceUrl, topicArn, ResoverSerialzer(context)))
                             .As<IMessageSender<TCommandQueueMessage>>();
+
+            CommandQueueSubscribesToNotifications(
+                awsConfig, snsServiceUrl, sqsServiceUrl, commandQueueUrl, topicArn);
         }
 
         static IMessageSerializer ResoverSerialzer(IComponentContext context)
@@ -70,6 +76,18 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs.Builder
             }
             var serializer = context.Resolve<IMessageDeserializer>();
             return serializer;
+        }
+
+        static void CommandQueueSubscribesToNotifications(
+            IAwsConfig awsConfig,
+            string snsServiceUrl,
+            string sqsServiceUrl,
+            string commandQueueUrl,
+            string topicArn)
+        {
+            var notificationSubscriber = new AWSSnsSubcriber(
+                awsConfig, snsServiceUrl, sqsServiceUrl, topicArn);
+            notificationSubscriber.Subscribe(commandQueueUrl);
         }
     }
 }

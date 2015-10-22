@@ -95,7 +95,7 @@ namespace AcklenAvenue.Queueing.Amazon.Sqs.Builder
                         "No deserializer is registered to build the queue, please call the method 'UseDeserializer<>()' to set a deserialzer"));
             }
 
-            CommandQueueConfiguration.Build(builder, AwsConfig, SqsConfiguration);
+            CommandQueueConfiguration.Build(builder, AwsConfig, SqsConfiguration, SnsConfiguration);
             EventQueueConfiguration.Build(builder, AwsConfig, SqsConfiguration, SnsConfiguration);
         }
     }
